@@ -61,11 +61,27 @@ $insert = "INSERT INTO " . $db . " (username, password) VALUES ('" . $user . "',
 if (mysqli_query($conn, $insert)) {
     echo "<p>Added successfully</p>";
 } else {
-    echo "Adding to database failed:" . mysqli_error($conn);
+    echo "Adding to database failed: " . mysqli_error($conn);
 }
 
-// Attempt to autheticate to several well-known websites
-echo "<p>Attempting to authenticate to...</p>";
+// Add script to perform website login
+echo "<script>
+          function breach(selected) {
+              console.log('selected:', selected);
+   	      document.getElementById('breachedText').innerHTML = selected.options[selected.selectedIndex].text;
+          }
+      </script>";
+
+// Attempt to autheticate to several well-known websites - add a selector to do so
+echo "<div id='breach'>";
+echo "<p>Select a website to breach:</p>";
+echo "<select id='breachSelector' onChange='breach(this)'>
+          <option value='twitch' selected>Twitch</option>
+          <option value='amazon'>Amazon</option>
+      </select>";
+echo "<p id='breachedText'>Twitch</p>";
+
+echo "</div>";
 
 // Display the breach statistics - all of the users
 echo "<h3>Overall Breach Statistics:</h3>";
