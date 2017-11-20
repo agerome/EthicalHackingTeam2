@@ -61,7 +61,7 @@ $insert = "INSERT INTO " . $db . " (username, password) VALUES ('" . $user . "',
 if (mysqli_query($conn, $insert)) {
     echo "<p>Added successfully</p>";
 } else {
-    die("Adding to database failed " . mysqli_error($conn));
+    echo "Adding to database failed:" . mysqli_error($conn);
 }
 
 // Attempt to autheticate to several well-known websites
