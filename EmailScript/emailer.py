@@ -4,7 +4,7 @@ import datetime
 # first is "from" arg; using a dictionary you can give an alias as value
 #yag=yagmail.SMTP({fromreal:'fakealias'}, 'password') 
 #could add a .yagmail file to keep this hidden for security sake
-yag = yagmail.SMTP()
+yag = yagmail.SMTP('''FILL THIS OUT WITH YOUR USER/PASS FOR YOUR EMAIL SERVICE''')
 
 #load email from HTML file
 '''TODO:
