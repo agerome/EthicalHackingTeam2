@@ -1,11 +1,39 @@
 import mechanize
+import MySQLdb
 browser = mechanize.Browser()
 browser.set_handle_robots(False)
 cookies = mechanize.CookieJar()
 browser.set_cookiejar(cookies)
-# browser.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.7 (KHTML, like Gecko) Chrome/7.0.517.41 Safari/534.7')]
 browser.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 browser.set_handle_refresh(False)
+
+
+db = MySQLdb.connect (host = "13.57.61.57",
+                        user = "root",
+                        passwd = "ethicalhacking",
+                        db = "ethicalhackingteam2")
+
+cur = db.cursor()
+cur.execute("SELECT * FROM ethicalhackingteam2")
+for r in cur.fetchall():
+    print r[0], " ", r[1]
+
+
+#LIST OF SUCCESSFUL URLS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class yes:
 
@@ -30,28 +58,25 @@ class yes:
 
 
         yes = self.browser.open(url)
-        # print yes.get_data()
-
-        i = 0
-        for f in self.browser.forms():
-            print(i)
-            print(f)
-
-            ++i
+        # i = 0
+        # for f in self.browser.forms():
+        #     print(i)
+        #     print(f)
+        #
+        #     ++i
 
 
 
 
         self.browser.select_form(nr = 0)       #This is login-password form -> nr = number = 0
-
-
         self.browser.form["email"] = "alexbui3415@yahoo.com"
         self.browser.form['password'] = "Thongthao123"
         response = self.browser.submit()
         print (response.geturl())
-        # print (response.get_data())
+
+        #lets compare urls
+        #IF RESPONSE != LIST OF URL, THEN IT'S A FAIL
+
 
 if __name__ == '__main__':
-#     main()
-    objName = yes()
-    objName.main()
+    main()
