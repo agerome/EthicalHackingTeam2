@@ -1,5 +1,7 @@
 import mechanize
 import MySQLdb
+import paramiko
+from sshtunnel import SSHTunnelForwarder
 browser = mechanize.Browser()
 browser.set_handle_robots(False)
 cookies = mechanize.CookieJar()
@@ -7,17 +9,59 @@ browser.set_cookiejar(cookies)
 browser.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 browser.set_handle_refresh(False)
 
+#NOTE: you must have the ssh key in the same directory as try.py
 
-db = MySQLdb.connect (host = "13.57.61.57",
-                        user = "root",
-                        passwd = "ethicalhacking",
-                        db = "ethicalhackingteam2")
+#ssh tunneling = https://stackoverflow.com/questions/44128175/python-used-sshtunnel-cant-connect-to-mysql
 
-cur = db.cursor()
-cur.execute("SELECT * FROM ethicalhackingteam2")
-for r in cur.fetchall():
-    print r[0], " ", r[1]
 
+#-----------------------------------------------
+#SSHTUNNEL
+with SSHTunnelForwarder(
+    ("13.57.61.57", 22), #<--- iffy
+    # ('localhost', 22),
+    ssh_username = "ubuntu",
+    ssh_pkey = "ethicalhacking2.pem",
+    remote_bind_address = ('127.0.0.1', 3306) #<--- iffy
+    # remote_bind_address = ('13.57.61.57', 3306)
+) as tunnel:
+        connection = MySQLdb.connect(user = "root",
+        password = "ethicalhacking")
+
+
+# db = MySQLdb.connect (host = "13.57.61.57",
+#                          user = "root",
+#                         passwd = "ethicalhacking",
+#                         db = "ethicalhackingteam2")
+#
+# cur = db.cursor()
+# cur.execute("SELECT * FROM ethicalhackingteam2")
+# for r in cur.fetchall():
+#     print r[0], " ", r[1]
+
+#--------------------------------------------
+# #PARAMIKO - feel free to try it
+# k = paramiko.RSAKey.from_private_key_file("ethicalhacking2.pem")
+# c = paramiko.SSHClient()
+# c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+# print("connecting")
+# c.connect(hostname = "13.57.61.57", username = "ubuntu", pkey = k)
+# print("connected")
+# print(c.get_transport().is_active())
+#
+#
+# # commands = ["ls", "cd /var/www/html"]
+# commands = ["mysql --user=root --password=ethicalhacking" , "use ethicalhackingteam2", "select * from ethicalhackingteam2  "]
+#
+# for com in commands:
+#     print "Executing {}".format(com)
+#     print(c.get_transport().is_active())
+#
+#     stdin, stdout, stderr = c.exec_command(com)
+#     stdin.write("use ethicalhackingteam2")
+#     print stdout.read()
+#     print("errors")
+#     print stderr.read()
+#--------------------------------------------------
 
 #LIST OF SUCCESSFUL URLS
 
