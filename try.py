@@ -3,7 +3,7 @@ Jae Lee & Cameron Moeller
 sample input line
 
 Usage:
-    python try.py usename password <site1> <site2> <site3> <site4> ...
+    python try.py <usename> <password> <site1> <site2> <site3> <site4> ...
 """
 
 from enum import Enum
