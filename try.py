@@ -1,7 +1,9 @@
 """
 Jae Lee & Cameron Moeller
 sample input line
-python try.py usename password
+
+Usage:
+    python try.py usename password <site1> <site2> <site3> <site4> ...
 """
 
 from enum import Enum
@@ -59,52 +61,57 @@ def main():
     # tumblr #need to use nr = 0 (user[email], user[password])
     # netflix #need to use nr = 0 (email, password)
 
-    try:
+    if len(sys.argv) >= 4:
         # Grab command line arguments, exit if it is invalid
-        site = sys.argv[1]
-        username = sys.argv[2]
-        password = sys.argv[3]
+        username = sys.argv[1]
+        password = sys.argv[2]
 
-        # Authenticate to site
-        result = attempt_authentication(site=site, username=username, password=password)
-        print(json.dumps(result))
+        # Authenticate to each site
+        for site in sys.argv[3:]:
+            result = attempt_authentication(site=site, username=username, password=password)
+            print(json.dumps({site: result}))
 
-    except Exception as e:
+    else:
         # Exit program and print an error
-        error = {"error": e.args}
+        error = {"error": "invalid arguments"}
         print(json.dumps(error))
+        print("Usage: python Authenticate.py <username> <password> <site1> <site2> <site3>")
 
 
 def attempt_authentication(site, username, password):
-    # grab fields
-    attempt = urls[site]["attempt"]
-    correct = urls[site]["correct"]
-    browser.open(attempt)
-    browser.select_form(nr=0)
+    try:
+        # grab fields
+        attempt = urls[site]["attempt"]
+        correct = urls[site]["correct"]
+        browser.open(attempt)
+        browser.select_form(nr=0)
 
-    # try the credentials on different sites
-    if site == Site.Facebook:
-        browser.form['email'] = username
-        browser.form['pass'] = password
-    if site == Site.Zipcar:
-        browser.form['user_name'] = username
-        browser.form['password'] = password
-    if site == Site.Ebay:
-        browser.form['userid'] = username
-        browser.form['pass'] = password
-    if site == Site.Tumblr:
-        browser.form['user[email]'] = username
-        browser.form['user[password]'] = password
-    if site == Site.Netflix:
-        browser.form['email'] = username
-        browser.form['password'] = password
+        # try the credentials on different sites
+        if site == Site.Facebook:
+            browser.form['email'] = username
+            browser.form['pass'] = password
+        if site == Site.Zipcar:
+            browser.form['user_name'] = username
+            browser.form['password'] = password
+        if site == Site.Ebay:
+            browser.form['userid'] = username
+            browser.form['pass'] = password
+        if site == Site.Tumblr:
+            browser.form['user[email]'] = username
+            browser.form['user[password]'] = password
+        if site == Site.Netflix:
+            browser.form['email'] = username
+            browser.form['password'] = password
 
-    # Submit the request and get the response
-    response = browser.submit()
-    response_url = response.geturl()
+        # Submit the request and get the response
+        response = browser.submit()
+        response_url = response.geturl()
 
-    # Check if the authentication was successful
-    return {site: True} if response_url == correct else {site: False}
+        # Check if the authentication was successful
+        return response_url == correct
+
+    except Exception as _: # Catch exception and return false
+        return False
 
 if __name__ == '__main__':
     main()
