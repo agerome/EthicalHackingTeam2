@@ -1,3 +1,4 @@
+#Jae Lee & Cameron Moeller
 #sample input line
 #python try.py usename password
 
@@ -12,7 +13,7 @@ browser.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv
 browser.set_handle_refresh(False)
 
 def main():
-
+    #test login pages
     try_url = ["http://www.facebook.com/login.php",
                 "https://members.zipcar.com/register/",
                 "https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&ru=https%3A%2F%2Fwww.ebay.com%2F",
@@ -39,6 +40,7 @@ def main():
     username = sys.argv[1]
     password = sys.argv[2]
 
+#try the credentials on different sites
     response_url_collection = list()
     for i in try_url:
         browser.open(i)
@@ -75,7 +77,20 @@ def main():
             if j == h:
                 match_success_urls.append(j)
 
-    print ("sites we were able to access : " , match_success_urls)
+#clean up url to site names
+    sites_names = list()
+    for y in match_success_urls:
+        if "facebook" in y:
+            sites_names.append("facebook")
+        if "zipcar" in y:
+            sites_names.append("zipcar")
+        if "ebay" in y:
+            sites_names.append("ebay")
+        if "tumblr" in y:
+            sites_names.append("tumblr")
+        if "netflix" in y:
+            sites_names.append("netflix")
+    print ("sites we were able to access : " , sites_names)
 
 
 
