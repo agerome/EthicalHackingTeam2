@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Jae Lee & Cameron Moeller
 sample input line
@@ -7,8 +8,8 @@ Usage:
 """
 
 from enum import Enum
-import mechanize
 import sys
+import mechanize
 import json
 
 

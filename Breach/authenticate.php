@@ -31,9 +31,31 @@ if (!$conn) {
 }
 
 // Call authentication script on the selected values
+$user = $_GET['username'];
+$pass = $_GET['password'];
+echo "<h3>Authentication:</h3>";
+echo "<p>Username: <strong>" . $user . "</strong>, Password: <strong>" . $pass . "</strong></p>";
+
+$sites = "";
+echo "<p>Attempting: ";
 foreach ($_GET['breachSelector'] as $selectedOption) {
-    echo $selectedOption."\n";
+    echo "<strong>" . $selectedOption . "</strong>\n";
+    $sites = $sites . " " . $selectedOption;
 }
+echo "</p>";
+
+// Call the command
+$cmd = "python ../Authentication/Authenticator.py " . $user . " " . $pass . " " . $sites;
+$output = shell_exec($cmd);
+echo $cmd;
+//echo "output:" . $output;
+//$o = shell_exec("sudo python ../Authentication/Authenticate.py ikualloveryou 2609drag facebook");
+//echo "o:" . $o;
+//$e =  shell_exec("/usr/bin/python /var/www/html/EthicalHackingTeam2/Authentication/Authenticate.py 2>&1");
+//echo "e:" . $e;
+//echo shell_exec("pip install mechanize"); 
+echo shell_exec("sudo -u ubuntu whoami 2>&1");
+echo shell_exec("/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py 2>&1");
 
 // Display the breach statistics - all of the users
 echo "<h3>Overall Breach Statistics:</h3>";

@@ -90,7 +90,9 @@ echo "<select id='breachSelector' name='breachSelector[]' multiple onChange='get
           <option value='amazon'>Amazon</option>
       </select>";
 echo "<p id='selectedText'>Twitch</p>";
-echo "<input type='submit' name='submit' value='submit'/>";
+echo "<input type='submit' name='submit' value='Submit'/>";
+echo "<input type='hidden' name='username' value='" . $user . "'/>";
+echo "<input type='hidden' name='password' value='" . $user . "'/>";
 echo "</form>";
 echo "</div>";
 
