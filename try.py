@@ -36,9 +36,8 @@ def main():
 
     # netflix #need to use nr = 0 (email, password)
 
-    url_arg = sys.argv[1]
-    username = sys.argv[2]
-    password = sys.argv[3]
+    username = sys.argv[1]
+    password = sys.argv[2]
 
     response_url_collection = list()
     for i in try_url:
