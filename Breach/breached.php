@@ -64,23 +64,34 @@ if (mysqli_query($conn, $insert)) {
     echo "Adding to database failed: " . mysqli_error($conn);
 }
 
-// Add script to perform website login
-echo "<script>
-          function breach(selected) {
-              console.log('selected:', selected);
-   	      document.getElementById('breachedText').innerHTML = selected.options[selected.selectedIndex].text;
+// Add script to show which are selected
+echo "<script>";
+echo "function getSelectedValues(select) {
+          var result = [];
+          var options = select && select.options;
+          var opt;
+          
+          for (var i = 0; i < options.length; i++) { 
+              opt = options[i];
+              if (opt.selected) { 
+                  result.push(opt.text);
+              }
           }
-      </script>";
+          document.getElementById('selectedText').innerHTML = result.join(', '); 
+      }";
+echo "</script>";
 
 // Attempt to autheticate to several well-known websites - add a selector to do so
 echo "<div id='breach'>";
 echo "<p>Select a website to breach:</p>";
-echo "<select id='breachSelector' onChange='breach(this)'>
+echo "<form id='selectForm' name='selectForm' method='get' action='authenticate.php'>";
+echo "<select id='breachSelector' multiple onChange='getSelectedValues(this)'>
           <option value='twitch' selected>Twitch</option>
           <option value='amazon'>Amazon</option>
       </select>";
-echo "<p id='breachedText'>Twitch</p>";
-
+echo "<p id='selectedText'>Twitch</p>";
+echo "<input type='submit' name='submit' value='submit'/>";
+echo "</form>";
 echo "</div>";
 
 // Display the breach statistics - all of the users
