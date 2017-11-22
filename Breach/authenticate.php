@@ -45,17 +45,43 @@ foreach ($_GET['breachSelector'] as $selectedOption) {
 echo "</p>";
 
 // Call the command
-$cmd = "python ../Authentication/Authenticator.py " . $user . " " . $pass . " " . $sites;
+$cmd = "/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py " . $user . " " . $pass . " " . $sites . " 2>&1";
 $output = shell_exec($cmd);
-echo $cmd;
-//echo "output:" . $output;
-//$o = shell_exec("sudo python ../Authentication/Authenticate.py ikualloveryou 2609drag facebook");
-//echo "o:" . $o;
-//$e =  shell_exec("/usr/bin/python /var/www/html/EthicalHackingTeam2/Authentication/Authenticate.py 2>&1");
-//echo "e:" . $e;
-//echo shell_exec("pip install mechanize"); 
-echo shell_exec("sudo -u ubuntu whoami 2>&1");
-echo shell_exec("/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py 2>&1");
+$output = "'" . $output . "'";
+echo $output;
+
+
+// Parse the command
+$json = json_decode($output, true);
+var_dump($json);
+var_dump($json);
+echo $json->{"twitch"};
+$error = json_last_error();
+var_dump($error);
+
+switch ($error) {
+    case JSON_ERROR_NONE:
+        echo ' - No errors';
+    break;
+    case JSON_ERROR_DEPTH:
+        echo ' - Maximum stack depth exceeded';
+    break;
+    case JSON_ERROR_STATE_MISMATCH:
+        echo ' - Underflow or the modes mismatch';
+    break;
+    case JSON_ERROR_CTRL_CHAR:
+        echo ' - Unexpected control character found';
+    break;
+    case JSON_ERROR_SYNTAX:
+        echo ' - Syntax error, malformed JSON';
+    break;
+    case JSON_ERROR_UTF8:
+        echo ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+    break;
+    default:
+        echo ' - Unknown error';
+    break;
+}
 
 // Display the breach statistics - all of the users
 echo "<h3>Overall Breach Statistics:</h3>";

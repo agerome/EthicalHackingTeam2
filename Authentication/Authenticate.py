@@ -67,10 +67,13 @@ def main():
         username = sys.argv[1]
         password = sys.argv[2]
 
+        results = {}
         # Authenticate to each site
         for site in sys.argv[3:]:
             result = attempt_authentication(site=site, username=username, password=password)
-            print(json.dumps({site: result}))
+            results[site] = "true" if result else "false"
+
+        print(json.dumps(results))
 
     else:
         # Exit program and print an error
