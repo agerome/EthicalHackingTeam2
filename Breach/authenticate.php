@@ -1,5 +1,22 @@
 <?php 
 
+// Add syle
+echo "<style>
+table {
+ font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+td, th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+}  
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>";   
+
 $servername = "localhost";
 $username = "root";
 $password = "ethicalhacking";
@@ -11,6 +28,11 @@ $conn = mysqli_connect($servername, $username, $password, $db);
 // Check connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
+}
+
+// Call authentication script on the selected values
+foreach ($_GET['breachSelector'] as $selectedOption) {
+    echo $selectedOption."\n";
 }
 
 // Display the breach statistics - all of the users

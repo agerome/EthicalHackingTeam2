@@ -85,7 +85,7 @@ echo "</script>";
 echo "<div id='breach'>";
 echo "<p>Select a website to breach:</p>";
 echo "<form id='selectForm' name='selectForm' method='get' action='authenticate.php'>";
-echo "<select id='breachSelector' multiple onChange='getSelectedValues(this)'>
+echo "<select id='breachSelector' name='breachSelector[]' multiple onChange='getSelectedValues(this)'>
           <option value='twitch' selected>Twitch</option>
           <option value='amazon'>Amazon</option>
       </select>";
