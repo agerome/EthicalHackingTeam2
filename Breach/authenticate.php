@@ -23,6 +23,7 @@ $password = "ethicalhacking";
 $db = "ethicalhackingteam2";
 
 // Create connection
+
 $conn = mysqli_connect($servername, $username, $password, $db);
 
 // Check connection
@@ -34,6 +35,8 @@ if (!$conn) {
 $user = $_GET['username'];
 $pass = $_GET['password'];
 echo "<h3>Authentication:</h3>";
+
+ 
 echo "<p>Username: <strong>" . $user . "</strong>, Password: <strong>" . $pass . "</strong></p>";
 
 $sites = "";
@@ -45,43 +48,9 @@ foreach ($_GET['breachSelector'] as $selectedOption) {
 echo "</p>";
 
 // Call the command
-$cmd = "/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py " . $user . " " . $pass . " " . $sites . " 2>&1";
+$cmd = "/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py " . $user . " " . $pass . " " . $sites . "2>&1";
 $output = shell_exec($cmd);
-$output = "'" . $output . "'";
 echo $output;
-
-
-// Parse the command
-$json = json_decode($output, true);
-var_dump($json);
-var_dump($json);
-echo $json->{"twitch"};
-$error = json_last_error();
-var_dump($error);
-
-switch ($error) {
-    case JSON_ERROR_NONE:
-        echo ' - No errors';
-    break;
-    case JSON_ERROR_DEPTH:
-        echo ' - Maximum stack depth exceeded';
-    break;
-    case JSON_ERROR_STATE_MISMATCH:
-        echo ' - Underflow or the modes mismatch';
-    break;
-    case JSON_ERROR_CTRL_CHAR:
-        echo ' - Unexpected control character found';
-    break;
-    case JSON_ERROR_SYNTAX:
-        echo ' - Syntax error, malformed JSON';
-    break;
-    case JSON_ERROR_UTF8:
-        echo ' - Malformed UTF-8 characters, possibly incorrectly encoded';
-    break;
-    default:
-        echo ' - Unknown error';
-    break;
-}
 
 // Display the breach statistics - all of the users
 echo "<h3>Overall Breach Statistics:</h3>";
@@ -102,24 +71,22 @@ echo "<table>
 	<tr>
 	    <th>Username</th>
 	    <th>Password</th>
-            <th>Twitch</th>
- 	    <th>Amazon</th>
- 	    <th>YouTube</th>
- 	    <th>Facebook</th>
- 	    <th>Twitter</th>
- 	    <th>Pinterest</th>
+            <th>Facebook</th>
+ 	    <th>Zipcar</th>
+ 	    <th>Ebay</th>
+ 	    <th>Tumblr</th>
+ 	    <th>Netflix</th>
  	</tr>";
 
 while ($row = mysqli_fetch_array($result)) {
     echo "<tr>
               <td>" . $row['username'] . "</td>
  	      <td>" . $row['password'] . "</td>
- 	      <td>" . displayBool($row['sites_breached_twitch']) . "</td>
- 	      <td>" . displayBool($row['sites_breached_amazon']) . "</td>
- 	      <td>" . displayBool($row['sites_breached_youtube']) . "</td>
-   	      <td>" . displayBool($row['sites_breached_facebook']) . "</td>
-   	      <td>" . displayBool($row['sites_breached_twitter']) . "</td>
- 	      <td>" . displayBool($row['sites_breached_pinterest']) . "</td>
+ 	      <td>" . displayBool($row['sites_breached_facebook']) . "</td>
+ 	      <td>" . displayBool($row['sites_breached_zipcar']) . "</td>
+ 	      <td>" . displayBool($row['sites_breached_ebay']) . "</td>
+   	      <td>" . displayBool($row['sites_breached_tumblr']) . "</td>
+   	      <td>" . displayBool($row['sites_breached_netflix']) . "</td>
   	  </tr>";
 } 
 
