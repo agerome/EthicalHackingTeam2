@@ -64,12 +64,12 @@ echo "<p>Select a website to breach:</p>";
 echo "<form id='selectForm' name='selectForm' method='get' action='authenticate.php' onsubmit='submitForm()'>";
 echo "<select id='breachSelector' name='breachSelector[]' multiple onChange='getSelectedValues(this)'>
           <option value='facebook' selected>Facebook</option>
-          <option value='zipcar' selected>Zipcar</option>
-          <option value='ebay' selected>Ebay</option>
+          <option value='dribbble' selected>Dribbble</option>
+          <option value='github' selected>Github</option>
           <option value='tumblr' selected>Tumblr</option>
-          <option value='netflix' selected>Netflix</option>
+          <option value='theguardian' selected>TheGuardian</option>
       </select>";
-echo "<p id='selectedText'>Facebook, Zipcar, Ebay, Tumblr, Netflix</p>";
+echo "<p id='selectedText'>Facebook, Dribbble, Github, Tumblr, TheGuardian</p>";
 echo "<input type='submit' name='submit' value='Submit'/>";
 echo "<input type='hidden' name='username' value='" . $user . "'/>";
 echo "<input type='hidden' name='password' value='" . $pass . "'/>";

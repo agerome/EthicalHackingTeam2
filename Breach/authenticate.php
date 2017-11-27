@@ -73,10 +73,10 @@ echo "<table>
 	    <th>Username</th>
 	    <th>Password</th>
         <th>Facebook</th>
- 	    <th>Zipcar</th>
- 	    <th>Ebay</th>
+ 	    <th>Dribbble</th>
+ 	    <th>Github</th>
  	    <th>Tumblr</th>
- 	    <th>Netflix</th>
+ 	    <th>TheGuardian</th>
  	</tr>";
 
 while ($row = mysqli_fetch_array($result)) {
@@ -84,10 +84,10 @@ while ($row = mysqli_fetch_array($result)) {
           <td>" . $row['username'] . "</td>
  	      <td>" . $row['password'] . "</td>
  	      <td>" . displayBool($row['sites_breached_facebook']) . "</td>
- 	      <td>" . displayBool($row['sites_breached_zipcar']) . "</td>
- 	      <td>" . displayBool($row['sites_breached_ebay']) . "</td>
+ 	      <td>" . displayBool($row['sites_breached_dribbble']) . "</td>
+ 	      <td>" . displayBool($row['sites_breached_github']) . "</td>
    	      <td>" . displayBool($row['sites_breached_tumblr']) . "</td>
-   	      <td>" . displayBool($row['sites_breached_netflix']) . "</td>
+   	      <td>" . displayBool($row['sites_breached_theguardian']) . "</td>
   	  </tr>";
 } 
 
