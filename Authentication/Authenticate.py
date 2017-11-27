@@ -145,6 +145,7 @@ def attempt_authentication(site, username, password):
             with connection.cursor() as cursor:
                 sql = "UPDATE ethicalhackingteam2 SET sites_breached_%s" % site
                 sql = sql + "=1"
+                sql = sql + " WHERE username='" + username + "'"
                 cursor.execute(sql)
                 print("<p>Updated</p>")
 
