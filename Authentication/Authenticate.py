@@ -39,7 +39,7 @@ urls = {
     },
     Site.Zipcar: {
         "attempt": "https://members.zipcar.com/register/",
-        "correct": "https://members.zipcar.com/members/account"
+        "correct": "https://members.zipcar.com/reservations/reserve"
     },
     Site.Ebay: {
         "attempt": "https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&ru=https%3A%2F%2Fwww.ebay.com%2F",
