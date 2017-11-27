@@ -40,15 +40,16 @@ echo "<h3>Authentication:</h3>";
 echo "<p>Username: <strong>" . $user . "</strong>, Password: <strong>" . $pass . "</strong></p>";
 
 $sites = "";
-echo "<p>Attempting: ";
+echo "<p>Attempting on: ";
 foreach ($_GET['breachSelector'] as $selectedOption) {
-    echo "<strong>" . $selectedOption . "</strong>\n";
+    echo "<strong>" . $selectedOption . ",</strong>\n";
     $sites = $sites . " " . $selectedOption;
 }
 echo "</p>";
 
-// Call the command
-$cmd = "/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py " . $user . " " . $pass . " " . $sites . "2>&1";
+// Call command
+$cmd = "/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py '" . $user . "' '" . $pass . "' " . $sites . " 2>&1";
+// echo $cmd;
 $output = shell_exec($cmd);
 echo $output;
 
@@ -63,7 +64,7 @@ if (!$result) {
 
 // Format bool that is given from MySQL
 function displayBool($value) {
-    return $value != 0 ? "True" : "False";
+    return $value != 0 ? "Success" : "Failed";
 }
 
 // Create table to display statistics
@@ -71,7 +72,7 @@ echo "<table>
 	<tr>
 	    <th>Username</th>
 	    <th>Password</th>
-            <th>Facebook</th>
+        <th>Facebook</th>
  	    <th>Zipcar</th>
  	    <th>Ebay</th>
  	    <th>Tumblr</th>
@@ -80,7 +81,7 @@ echo "<table>
 
 while ($row = mysqli_fetch_array($result)) {
     echo "<tr>
-              <td>" . $row['username'] . "</td>
+          <td>" . $row['username'] . "</td>
  	      <td>" . $row['password'] . "</td>
  	      <td>" . displayBool($row['sites_breached_facebook']) . "</td>
  	      <td>" . displayBool($row['sites_breached_zipcar']) . "</td>
