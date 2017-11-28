@@ -36,7 +36,8 @@ urls = {
     Site.Facebook: {
         "attempt": "http://www.facebook.com/login.php",
         "correct": "https://www.facebook.com/checkpoint/?next",
-	"correct": "https://www.facebook.com/?sk=welcome"
+	"correct": "https://www.facebook.com/?sk=welcome",
+	"correct": "https://www.facebook.com/"
     },
     Site.Dribbble: {
 	"attempt": "https://dribbble.com/session/new",
