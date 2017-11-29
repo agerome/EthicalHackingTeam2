@@ -35,25 +35,25 @@ class Site(str, Enum):
 urls = {
     Site.Facebook: {
         "attempt": "http://www.facebook.com/login.php",
-        "correct": "https://www.facebook.com/checkpoint/?next",
-	"correct": "https://www.facebook.com/?sk=welcome",
-	"correct": "https://www.facebook.com/"
+	"correct":{"https://www.facebook.com/checkpoint/?next",
+		"https://www.facebook.com/?sk=welcome",
+		"https://www.facebook.com/"}
     },
     Site.Dribbble: {
 	"attempt": "https://dribbble.com/session/new",
-	"correct": "https://dribbble.com/"	
+	"correct": {"https://dribbble.com/"}	
     },
     Site.Github: {
 	"attempt": "https://github.com/login",
-        "correct": "https://github.com/"
+        "correct": {"https://github.com/"}
     },
     Site.Tumblr: {
         "attempt": "https://www.tumblr.com/login",
-        "correct": "https://www.tumblr.com/dashboard"
+        "correct": {"https://www.tumblr.com/dashboard"}
     },
     Site.TheGuardian: {
         "attempt": "https://profile.theguardian.com/signin?INTCMP=DOTCOM_HEADER_SIGNIN",
-        "correct": "https://www.theguardian.com/us"
+        "correct": {"https://www.theguardian.com/us"}
     }
 }
 
@@ -109,7 +109,7 @@ def attempt_authentication(site, username, password):
     try:
         # grab fields
         attempt = urls[site]["attempt"]
-        correct = urls[site]["correct"]
+#        correct = urls[site]["correct"]
         browser.open(attempt)
         browser.select_form(nr=0)
 
@@ -137,7 +137,7 @@ def attempt_authentication(site, username, password):
         print(response_url)
 
         # Check if the authentication was successful
-        success = response_url == correct
+	success = response_url in urls[site]["correct"]
 
         if success:
             print("<p style=color:green;>Success</p>")
