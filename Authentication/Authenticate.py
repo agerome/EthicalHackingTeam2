@@ -69,10 +69,10 @@ browser.set_handle_refresh(False)
 def main():
 
     # fb #need to use nr = 0 (email, pass)
-    # zipcar #need to use nr = 0 (user_name, password)
-    # ebay #need to use nr = 0 (userid, pass)
+    # dribbble #need to use nr = 0 (login, password)
+    # github #need to use nr = 0 (login, password)
     # tumblr #need to use nr = 0 (user[email], user[password])
-    # netflix #need to use nr = 0 (email, password)
+    # the guardian #need to use nr = 0 (email, password)
 
     if len(sys.argv) >= 4:
         # Grab command line arguments, exit if it is invalid
