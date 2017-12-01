@@ -142,7 +142,7 @@ def attempt_authentication(site, username, password):
 
         if success:
             print("<p style=color:green;>Success</p>")
-            print("<p>Updating database...</p>")
+           # print("<p>Updating database...</p>")
 	    """
             # Update MySql database
             with connection.cursor() as cursor:

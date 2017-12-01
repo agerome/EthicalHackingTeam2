@@ -9,11 +9,11 @@
 
 
 			
-			<form id='login' action='login.php' method='post'  accept-charset='UTF-8'>
+			<form id='login' onsubmit="return !!(checkempty() & checkagree() & listselected());" action='login.php' method='post'  accept-charset='UTF-8'>
 			<input type='hidden' name='submitted' id='submitted' value='1'/>
 
 
-			<p>I agree<input type="checkbox" name="auth" value="agree" checked /></p>
+			<p>I agree<input type="checkbox" id="auth" name="auth" value="agree" checked /></p>
 
 			<label for='username' >UserName*:</label>
 			<input type='text' name='username' id='username'  maxlength="50" />
@@ -29,20 +29,39 @@
 				<option value='tumblr' selected>Tumblr</option>
 				<option value='theguardian' selected>TheGuardian</option>
 			</select>
-
-
-
-
-
-
-
+			
 			<input type='submit' name='Submit' value='Submit' />
 
 			</form>
-<!--			<form id='website' action='login.php' method='get' accept-charset='UTF-8'>
 
 
-			</form>-->
+
+			<!-- check to see username and password fields are filled out & checkbox filled-->
+			<script>
+				function checkempty(){
+					//alert('huh');
+					var id = document.getElementById("username").value;
+					var pa = document.getElementById("password").value;
+					var err = 'Either the username or password field is empty!';
+					if(id == '' || pa == ''){
+						alert(err);
+						return false;
+					}
+					else{
+						return true;
+					}
+				}
+
+				function checkagree(){
+					var chkbox = document.getElementById("auth").checked;
+					if(chkbox == false){
+						alert("Without your consent we will not run your credentials with our tool!");
+					}
+					return chkbox;
+					
+				}
+			</script>
+
 	
 		</body>
 	</head>
