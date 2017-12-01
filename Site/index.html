@@ -3,10 +3,17 @@
 	<title>VULNERA</title>
 	<head>
 		<body>
-			<form id='login' action='login.php' method='post' accept-charset='UTF-8'>
-			<fieldset >
-			<legend>Login</legend>
+
+			<h1> Welcome to our credential vulnerability tester</h1>
+			<h4> We will run your credentials on different sites and gather breach statistics. Are you sure you want to continue?"</h4>
+
+
+			
+			<form id='login' action='login.php' method='post'  accept-charset='UTF-8'>
 			<input type='hidden' name='submitted' id='submitted' value='1'/>
+
+
+			<p>I agree<input type="checkbox" name="auth" value="agree" checked /></p>
 
 			<label for='username' >UserName*:</label>
 			<input type='text' name='username' id='username'  maxlength="50" />
@@ -14,11 +21,28 @@
 			<label for='password' >Password*:</label>
 			<input type='password' name='password' id='password' maxlength="50" />
 
+			
+			<select id='breachSelector' name='breachSelector[]' multiple onChange=getSelectedValues(this)'>
+				<option value='facebook' selected>Facebook</option>
+				<option value='dribbble' selected>Dribbble</option>
+				<option value='github' selected>Github</option>
+				<option value='tumblr' selected>Tumblr</option>
+				<option value='theguardian' selected>TheGuardian</option>
+			</select>
+
+
+
+
+
+
+
 			<input type='submit' name='Submit' value='Submit' />
 
-			</fieldset>
 			</form>
+<!--			<form id='website' action='login.php' method='get' accept-charset='UTF-8'>
 
+
+			</form>-->
 	
 		</body>
 	</head>

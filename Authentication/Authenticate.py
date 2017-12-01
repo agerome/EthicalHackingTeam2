@@ -14,6 +14,7 @@ import json
 import pymysql.cursors
 import pymysql
 
+"""
 # Connect to the database
 connection = pymysql.connect(host='localhost',
                              user='root',
@@ -21,7 +22,7 @@ connection = pymysql.connect(host='localhost',
                              db='ethicalhackingteam2',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
-
+"""
 
 # enum for the sites
 class Site(str, Enum):
@@ -79,7 +80,7 @@ def main():
         username = sys.argv[1]
         password = sys.argv[2]
 
-                    
+	"""                 
         # Update MySql database
         with connection.cursor() as cursor:
             # Create a new record
@@ -90,7 +91,7 @@ def main():
         # connection is not autocommit by default. So you must commit to save
         # your changes.
         connection.commit()
-
+	"""
         # Authenticate to each site
         for site in sys.argv[3:]:
             print("<p><u>Attempt: <strong>" + site + "</strong></u></p>")
@@ -102,7 +103,7 @@ def main():
         # Exit program; invalid arguments
         print("Usage: python Authenticate.py <username> <password> <site1> <site2> <site3>")
 
-    connection.close()
+    #connection.close()
 
 
 def attempt_authentication(site, username, password):
@@ -142,7 +143,7 @@ def attempt_authentication(site, username, password):
         if success:
             print("<p style=color:green;>Success</p>")
             print("<p>Updating database...</p>")
-
+	    """
             # Update MySql database
             with connection.cursor() as cursor:
                 sql = "UPDATE ethicalhackingteam2 SET sites_breached_%s" % site
@@ -154,7 +155,7 @@ def attempt_authentication(site, username, password):
             # # connection is not autocommit by default. So you must commit to save
             # # your changes.
             connection.commit()
-            
+	    """         
         else:
             print("<p style=color:red;>Failed</p>")       
 
