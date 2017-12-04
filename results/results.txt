@@ -1,0 +1,6 @@
+Based on your credentials, we were able to access: 
+Attempt: facebook---> Success 
+Attempt: dribbble---> Failed 
+Attempt: github---> Success 
+Attempt: tumblr---> Success 
+Attempt: theguardian---> Failed 

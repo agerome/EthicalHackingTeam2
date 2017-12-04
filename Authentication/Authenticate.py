@@ -13,7 +13,7 @@ import mechanize
 import json
 import pymysql.cursors
 import pymysql
-
+import os
 """
 # Connect to the database
 connection = pymysql.connect(host='localhost',
@@ -66,7 +66,8 @@ browser.set_cookiejar(cookies)
 browser.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 browser.set_handle_refresh(False)
 
-
+f = open('/var/www/html/EthicalHackingTeam2/results/results.txt', 'w')
+f.write("Based on your credentials, we were able to access: \n")
 def main():
 
     # fb #need to use nr = 0 (email, pass)
@@ -92,12 +93,18 @@ def main():
         # your changes.
         connection.commit()
 	"""
+
+
         # Authenticate to each site
         for site in sys.argv[3:]:
             print("<p><u>Attempt: <strong>" + site + "</strong></u></p>")
-            
+            f.write("Attempt: " + site)
             # Attempt authentication
             attempt_authentication(site=site, username=username, password=password)
+	f.close()	
+	#lets run that emailer
+	os.system('python /var/www/html/EthicalHackingTeam2/Email/emailResults.py '+ username + " " + '/var/www/html/EthicalHackingTeam2/results/results.txt')
+
 
     else:
         # Exit program; invalid arguments
@@ -110,7 +117,6 @@ def attempt_authentication(site, username, password):
     try:
         # grab fields
         attempt = urls[site]["attempt"]
-#        correct = urls[site]["correct"]
         browser.open(attempt)
         browser.select_form(nr=0)
 
@@ -135,13 +141,18 @@ def attempt_authentication(site, username, password):
         response = browser.submit()
         response_url = response.geturl()
 
-        print(response_url)
+#        print(response_url)
 
         # Check if the authentication was successful
 	success = response_url in urls[site]["correct"]
+	
 
+
+
+	
         if success:
             print("<p style=color:green;>Success</p>")
+	    f.write("---> Success \n")
            # print("<p>Updating database...</p>")
 	    """
             # Update MySql database
@@ -157,7 +168,12 @@ def attempt_authentication(site, username, password):
             connection.commit()
 	    """         
         else:
-            print("<p style=color:red;>Failed</p>")       
+            print("<p style=color:red;>Failed</p>")     
+	    f.write("---> Failed \n")  
+
+
+
+
 
     except Exception as e: # Catch exception and return false
         print("An error occured:", e)

@@ -7,7 +7,7 @@ python emailer.py <email-addr> <report.txt>
 
 #yag = yagmail.SMTP('''FILL THIS OUT WITH YOUR USER/PASS FOR YOUR EMAIL SERVICE''')
 #yag = yagmail.SMTP('<USER>', '<PASS>')
-
+yag = yagmail.SMTP('ehteam2@gmail.com', 'ethical789')
 
 #load email from HTML file
 '''TODO:
