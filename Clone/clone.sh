@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# USAGE: ./getter <url-of-login-page>
+# USAGE: ./clone <url-of-login-page>
 # requires wget, scp
 
 mkdir tmp
