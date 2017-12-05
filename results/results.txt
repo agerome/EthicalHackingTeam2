@@ -1,6 +1,14 @@
+Oh no! You've been phished! 
 Based on your credentials, we were able to access: 
-Attempt: facebook---> Success 
-Attempt: dribbble---> Failed 
-Attempt: github---> Success 
-Attempt: tumblr---> Success 
-Attempt: theguardian---> Failed 
+
+
+Attempt: facebook---> Success
+Attempt: dribbble---> Failed
+Attempt: github---> Success
+Attempt: tumblr---> Success
+Attempt: theguardian---> Failed
+
+
+ -CS378 Ethical Hacking Team 2- 
+
+ if you want to learn more about securing your password, visit: https://staysafeonline.org/stay-safe-online/securing-key-accounts-devices/passwords-securing-accounts/

@@ -22,4 +22,3 @@ with open(sys.argv[2], 'r') as f:
     subject = 'Phishing Results'
     yag.send(email, subject, contents)
 
-print('Results sent to ' + email)

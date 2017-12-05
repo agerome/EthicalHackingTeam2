@@ -12,6 +12,8 @@ python emailer.py <emails-to-phish.txt> <phishing-email.html>
 #yag = yagmail.SMTP('''FILL THIS OUT WITH YOUR USER/PASS FOR YOUR EMAIL SERVICE''')
 #yag = yagmail.SMTP('<USER>', '<PASS>')
 #yag = yagmail.SMTP('imweaktophishing@gmail.com', 'ethical456')
+yag = yagmail.SMTP('helpdeskfacebookinfosec@gmail.com', 'ethicalhacking')
+
 
 #load email from HTML file
 '''TODO:

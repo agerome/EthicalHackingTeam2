@@ -29,15 +29,15 @@ echo "<h3>Authentication:</h3>";
 echo "<p>Username: <strong>" . $user . "</strong>, Password: <strong>" . $pass . "</strong></p>";
 
 $sites = "facebook dribbble github tumblr theguardian";
-echo "<p>Attempting on: ";
+//echo "<p>Attempting on: ";
 $cmd = "/var/www/html/EthicalHackingTeam2/Authentication/./Authenticate.py '" . $user . "' '" . $pass . "' " . $sites . " 2>&1";
 $output = shell_exec($cmd);
 echo $output;
 
-echo "</p>";
+//echo "</p>";
 
 
-echo "<p> Now sending result file to </p>" . $user;
+echo "<h3> Now sending result file to: </h3>" . $user;
 
 
 
